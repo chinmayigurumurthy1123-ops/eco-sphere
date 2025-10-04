@@ -36,6 +36,19 @@ export default function Home() {
             </Link>
           </div>
 
+          {/* Quote & Illustration */}
+          <div className="flex flex-col items-center mt-12 mb-8">
+            <div className="w-24 h-24 mb-2">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="36" fill="#87CEEB" opacity="0.2" />
+                <path d="M40 60C55 60 60 40 40 20C20 40 25 60 40 60Z" fill="#2D5A27" />
+                <ellipse cx="40" cy="40" rx="12" ry="18" fill="#4CAF50" opacity="0.7" />
+              </svg>
+            </div>
+            <blockquote className="text-2xl md:text-3xl font-semibold text-[#2D5A27] text-center">
+              "Measure. Reduce. Offset. Together"
+            </blockquote>
+          </div>
           <div className="grid md:grid-cols-3 gap-8 mt-20">
             <div className="bg-white p-8 rounded-xl shadow-md">
               <div className="bg-[#87CEEB] p-3 rounded-full w-fit mx-auto mb-4">
