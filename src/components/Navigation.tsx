@@ -1,4 +1,4 @@
-import { useState } from 'react';
+ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Leaf } from 'lucide-react';
 
@@ -11,6 +11,7 @@ export default function Navigation() {
     { path: '/calculator', label: 'Calculator' },
     { path: '/goals', label: 'Goals' },
     { path: '/marketplace', label: 'Marketplace' },
+    { path: '/learn', label: 'Learn' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

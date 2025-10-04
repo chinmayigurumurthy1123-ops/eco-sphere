@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Calculator from './pages/Calculator';
 import Goals from './pages/Goals';
 import Marketplace from './pages/Marketplace';
+import Learn from './pages/Learn';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/learn" element={<Learn />} />
         </Routes>
       </div>
     </Router>
