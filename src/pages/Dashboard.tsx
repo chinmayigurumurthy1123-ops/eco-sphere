@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingDown, Target, ShoppingBag, Leaf, Activity, Zap, Trash2, Car } from 'lucide-react';
+import Modal from '../components/Modal';
 
 export default function Dashboard() {
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
   const metrics = [
     {
       icon: TrendingDown,
@@ -82,9 +85,19 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-          <p className="text-gray-600">Welcome back! Here's your sustainability overview.</p>
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+            <p className="text-gray-600">Welcome back! Here's your sustainability overview.</p>
+          </div>
+          <div>
+            <button
+              onClick={() => setIsStatsOpen(true)}
+              className="px-4 py-2 bg-white text-[#2D5A27] border-2 border-[#2D5A27] rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            >
+              View Stats
+            </button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -188,6 +201,34 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isStatsOpen}
+        onClose={() => setIsStatsOpen(false)}
+        title="Your Key Stats"
+        actions={
+          <button
+            onClick={() => setIsStatsOpen(false)}
+            className="px-4 py-2 rounded-lg font-medium bg-[#2D5A27] text-white hover:bg-[#3d7a37]"
+          >
+            Close
+          </button>
+        }
+      >
+        <div className="grid grid-cols-2 gap-4">
+          {metrics.map((m) => (
+            <div key={m.label} className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm text-gray-600">{m.label}</span>
+                <span className="text-xs font-semibold text-green-600">{m.change}</span>
+              </div>
+              <div className="text-xl font-bold text-gray-900">
+                {m.value} <span className="text-sm font-normal text-gray-500">{m.unit}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 }

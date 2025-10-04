@@ -1,6 +1,13 @@
+import { useState, useMemo } from 'react';
 import { ShoppingBag, TreePine, Wind, Droplets, Sun, MapPin, CheckCircle } from 'lucide-react';
+import Modal from '../components/Modal';
+import { useToast } from '../components/Toast';
 
 export default function Marketplace() {
+  const { showToast } = useToast();
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const projects = [
     {
       id: 1,
@@ -75,6 +82,27 @@ export default function Marketplace() {
       color: 'bg-[#87CEEB]',
     },
   ];
+
+  const selectedProject = useMemo(
+    () => projects.find((p) => p.id === selectedProjectId) || null,
+    [projects, selectedProjectId]
+  );
+
+  const openPurchase = (id: number) => {
+    setSelectedProjectId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => setIsModalOpen(false);
+
+  const confirmPurchase = () => {
+    setIsModalOpen(false);
+    if (selectedProject) {
+      showToast(`Purchased ${selectedProject.title} • ${selectedProject.impact}`, 'success');
+    } else {
+      showToast('Purchase completed', 'success');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -156,7 +184,10 @@ export default function Marketplace() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-[#2D5A27] text-white py-3 rounded-lg font-semibold hover:bg-[#3d7a37] transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => openPurchase(project.id)}
+                    className="w-full bg-[#2D5A27] text-white py-3 rounded-lg font-semibold hover:bg-[#3d7a37] transition-colors flex items-center justify-center gap-2"
+                  >
                     <ShoppingBag className="h-5 w-5" />
                     Buy Offset
                   </button>
@@ -199,6 +230,47 @@ export default function Marketplace() {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="Confirm Purchase"
+        actions={
+          <>
+            <button
+              onClick={closeModal}
+              className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmPurchase}
+              className="px-4 py-2 rounded-lg font-semibold bg-[#2D5A27] text-white hover:bg-[#3d7a37]"
+            >
+              Confirm Purchase
+            </button>
+          </>
+        }
+      >
+        {selectedProject ? (
+          <div className="space-y-2">
+            <p className="text-gray-900 font-semibold">{selectedProject.title}</p>
+            <p className="text-sm text-gray-600 flex items-center gap-2">
+              <MapPin className="h-4 w-4" /> {selectedProject.location}
+            </p>
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-sm text-gray-600">Impact</span>
+              <span className="font-medium text-gray-900">{selectedProject.impact}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Price</span>
+              <span className="text-lg font-bold text-[#2D5A27]">${selectedProject.price}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-700">No project selected.</p>
+        )}
+      </Modal>
     </div>
   );
 }
