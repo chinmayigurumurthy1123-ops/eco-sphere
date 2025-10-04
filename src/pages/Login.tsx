@@ -110,20 +110,6 @@ export default function Login() {
           </Link>
         </p>
 
-        {/* Quote & Illustration */}
-        <div className="mt-10 flex flex-col items-center">
-          <div className="w-20 h-20 mb-2">
-            {/* Simple eco illustration (leaf + globe) */}
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="40" cy="40" r="36" fill="#87CEEB" opacity="0.2" />
-              <path d="M40 60C55 60 60 40 40 20C20 40 25 60 40 60Z" fill="#2D5A27" />
-              <ellipse cx="40" cy="40" rx="12" ry="18" fill="#4CAF50" opacity="0.7" />
-            </svg>
-          </div>
-          <blockquote className="text-xl font-semibold text-[#2D5A27] text-center">
-            "Measure. Reduce. Offset. Together"
-          </blockquote>
-        </div>
       </div>
       {/* Footer */}
       <footer className="w-full bg-[#2D5A27] text-white py-6 mt-8 rounded-t-2xl shadow-lg">
