@@ -7,6 +7,12 @@ import Dashboard from './pages/Dashboard';
 import Calculator from './pages/Calculator';
 import Goals from './pages/Goals';
 import Marketplace from './pages/Marketplace';
+import HomeDashboard from './pages/HomeDashboard';
+import Learn from './pages/Learn';
+import Careers from './pages/Careers';
+import HelpContact from './pages/HelpContact';
+import SearchResults from './pages/SearchResults';
+import ProfileEdit from './pages/ProfileEdit';
 
 function App() {
   return (
@@ -18,9 +24,16 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/home" element={<HomeDashboard />} />
+          <Route path="/dashboard/learn" element={<Learn />} />
+          <Route path="/dashboard/careers" element={<Careers />} />
+          <Route path="/dashboard/help" element={<HelpContact />} />
+          <Route path="/dashboard/search" element={<SearchResults />} />
+          <Route path="/dashboard/profile" element={<ProfileEdit />} />
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/donate" element={<Marketplace />} />
         </Routes>
       </div>
     </Router>

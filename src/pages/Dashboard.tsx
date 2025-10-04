@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingDown, Target, ShoppingBag, Leaf, Activity, Zap, Trash2, Car } from 'lucide-react';
 import Modal from '../components/Modal';
+import DashboardNav from '../components/DashboardNav';
 
 export default function Dashboard() {
   const [isStatsOpen, setIsStatsOpen] = useState(false);
@@ -83,7 +84,9 @@ export default function Dashboard() {
   const maxValue = Math.max(...chartData.map((d) => d.value));
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50">
+      <DashboardNav />
+      <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
@@ -201,7 +204,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
+      </div>
       <Modal
         isOpen={isStatsOpen}
         onClose={() => setIsStatsOpen(false)}
