@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, BookOpen, Briefcase, LifeBuoy, UserCircle, HeartHandshake, Search, Menu, X } from 'lucide-react';
+import { NotificationBell } from './Notifications';
 
 export default function DashboardNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,8 @@ export default function DashboardNav() {
     { to: '/dashboard/learn', label: 'Learn', Icon: BookOpen },
     { to: '/dashboard/careers', label: 'Careers', Icon: Briefcase },
     { to: '/dashboard/help', label: 'Help/Contact', Icon: LifeBuoy },
+    { to: '/forum', label: 'Forum', Icon: LifeBuoy },
+    { to: '/reports', label: 'Reports', Icon: BookOpen },
     { to: '/dashboard/profile', label: 'Profile', Icon: UserCircle },
     { to: '/donate', label: 'Donate', Icon: HeartHandshake },
   ];
@@ -46,6 +49,7 @@ export default function DashboardNav() {
           </div>
 
           <div className="flex items-center gap-2">
+            <NotificationBell onClick={() => navigate('/dashboard/notifications')} />
             <button
               onClick={goSearch}
               aria-label="Search"

@@ -13,6 +13,10 @@ import Careers from './pages/Careers';
 import HelpContact from './pages/HelpContact';
 import SearchResults from './pages/SearchResults';
 import ProfileEdit from './pages/ProfileEdit';
+import NotificationsPanel from './pages/NotificationsPanel';
+import ForumList from './pages/ForumList';
+import ForumThread from './pages/ForumThread';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
           <Route path="/dashboard/help" element={<HelpContact />} />
           <Route path="/dashboard/search" element={<SearchResults />} />
           <Route path="/dashboard/profile" element={<ProfileEdit />} />
+          <Route path="/dashboard/notifications" element={<NotificationsPanel />} />
+          <Route path="/forum" element={<ForumList />} />
+          <Route path="/forum/:id" element={<ForumThread />} />
+          <Route path="/reports" element={<Reports />} />
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/marketplace" element={<Marketplace />} />
