@@ -12,6 +12,7 @@ export default function Navigation() {
     { path: '/goals', label: 'Goals' },
     { path: '/marketplace', label: 'Marketplace' },
     { path: '/learn', label: 'Learn' },
+    { path: '/forum', label: 'Forum' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

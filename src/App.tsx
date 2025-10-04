@@ -8,6 +8,7 @@ import Calculator from './pages/Calculator';
 import Goals from './pages/Goals';
 import Marketplace from './pages/Marketplace';
 import Learn from './pages/Learn';
+import Forum from './pages/Forum';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/goals" element={<Goals />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/learn" element={<Learn />} />
+          <Route path="/forum" element={<Forum />} />
         </Routes>
       </div>
     </Router>
