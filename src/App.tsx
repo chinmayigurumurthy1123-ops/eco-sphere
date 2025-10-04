@@ -9,6 +9,8 @@ import Goals from './pages/Goals';
 import Marketplace from './pages/Marketplace';
 import Learn from './pages/Learn';
 import Forum from './pages/Forum';
+import Education from './pages/Education';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/education" element={<Education />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </div>
     </Router>

@@ -1,234 +1,148 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Users, MessageSquare, Tag, PlusCircle } from 'lucide-react';
+import Modal from '../components/Modal';
+import { useToast } from '../components/Toast';
+import { useNotifications } from '../components/Notifications';
 
 interface Thread {
   id: number;
   title: string;
   author: string;
-  posts: { id: number; author: string; content: string; }[];
+  replies: number;
+  tags: string[];
+  createdAt: number;
 }
 
-const initialThreads: Thread[] = [
-  {
-    id: 1,
-    title: 'How to start a home compost?',
-    author: 'Alice',
-    posts: [
-      { id: 1, author: 'Alice', content: 'What are the basics for home composting?' },
-      { id: 2, author: 'Bob', content: 'Start with kitchen scraps and leaves. Avoid meat and dairy.' },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Best eco-friendly cleaning products?',
-    author: 'Charlie',
-    posts: [
-      { id: 1, author: 'Charlie', content: 'Any recommendations for green cleaning brands?' },
-    ],
-  },
-];
+export default function Forum() {
+  const { showToast } = useToast();
+  const { addNotification } = useNotifications();
+  const [threads, setThreads] = useState<Thread[]>([
+    {
+      id: 1,
+      title: 'Best practices to reduce office energy?',
+      author: 'Ava',
+      replies: 5,
+      tags: ['energy', 'office'],
+      createdAt: Date.now() - 1000 * 60 * 60 * 4,
+    },
+    {
+      id: 2,
+      title: 'How to estimate Scope 3 for suppliers?',
+      author: 'Leo',
+      replies: 3,
+      tags: ['scope3', 'measurement'],
+      createdAt: Date.now() - 1000 * 60 * 60 * 28,
+    },
+  ]);
 
-const Forum: React.FC = () => {
-  const [threads, setThreads] = useState<Thread[]>(initialThreads);
-  const [selectedThread, setSelectedThread] = useState<Thread | null>(null);
-  const [showPostModal, setShowPostModal] = useState(false);
-  const [showReplyModal, setShowReplyModal] = useState(false);
-  const [newThreadTitle, setNewThreadTitle] = useState('');
-  const [newThreadAuthor, setNewThreadAuthor] = useState('');
-  const [newThreadContent, setNewThreadContent] = useState('');
-  const [replyAuthor, setReplyAuthor] = useState('');
-  const [replyContent, setReplyContent] = useState('');
+  const [isAskOpen, setIsAskOpen] = useState(false);
+  const [question, setQuestion] = useState('');
 
-  const openThread = (thread: Thread) => {
-    setSelectedThread(thread);
-  };
-
-  const closeThread = () => {
-    setSelectedThread(null);
-  };
-
-  const openPostModal = () => {
-    setShowPostModal(true);
-  };
-
-  const closePostModal = () => {
-    setShowPostModal(false);
-    setNewThreadTitle('');
-    setNewThreadAuthor('');
-    setNewThreadContent('');
-  };
-
-  const openReplyModal = () => {
-    setShowReplyModal(true);
-  };
-
-  const closeReplyModal = () => {
-    setShowReplyModal(false);
-    setReplyAuthor('');
-    setReplyContent('');
-  };
-
-  const createThread = () => {
-    if (newThreadTitle && newThreadAuthor && newThreadContent) {
-      const newThread: Thread = {
-        id: threads.length + 1,
-        title: newThreadTitle,
-        author: newThreadAuthor,
-        posts: [{ id: 1, author: newThreadAuthor, content: newThreadContent }],
-      };
-      setThreads([newThread, ...threads]);
-      closePostModal();
+  const postQuestion = () => {
+    if (!question.trim()) {
+      showToast('Please enter a question', 'warning');
+      return;
     }
-  };
-
-  const addReply = () => {
-    if (selectedThread && replyAuthor && replyContent) {
-      const updatedThreads = threads.map((thread) => {
-        if (thread.id === selectedThread.id) {
-          return {
-            ...thread,
-            posts: [
-              ...thread.posts,
-              { id: thread.posts.length + 1, author: replyAuthor, content: replyContent },
-            ],
-          };
-        }
-        return thread;
-      });
-      setThreads(updatedThreads);
-      setSelectedThread({
-        ...selectedThread,
-        posts: [
-          ...selectedThread.posts,
-          { id: selectedThread.posts.length + 1, author: replyAuthor, content: replyContent },
-        ],
-      });
-      closeReplyModal();
-    }
+    const newThread: Thread = {
+      id: threads.length + 1,
+      title: question.trim(),
+      author: 'You',
+      replies: 0,
+      tags: ['question'],
+      createdAt: Date.now(),
+    };
+    setThreads([newThread, ...threads]);
+    setIsAskOpen(false);
+    setQuestion('');
+    showToast('Question posted. You will be notified on replies.', 'success');
+    addNotification('New forum question created', 'project');
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Community Forum</h1>
-      <button
-        className="mb-4 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
-        onClick={openPostModal}
-      >
-        + New Thread
-      </button>
-      <div className="space-y-4">
-        {threads.map((thread) => (
-          <div key={thread.id} className="border rounded-lg p-4 shadow hover:shadow-lg transition">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-xl font-bold cursor-pointer" onClick={() => openThread(thread)}>{thread.title}</h2>
-              <span className="text-sm text-gray-500">by {thread.author}</span>
-            </div>
-            <div className="text-gray-700">{thread.posts[0].content}</div>
-            <button
-              className="mt-2 text-green-700 underline"
-              onClick={() => openThread(thread)}
-            >
-              View Thread ({thread.posts.length} posts)
-            </button>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <Users className="h-8 w-8 text-[#2D5A27]" />
+            <h1 className="text-3xl font-bold text-gray-900">Community Forum</h1>
           </div>
-        ))}
-        {threads.length === 0 && (
-          <div className="text-center text-gray-500">No threads yet.</div>
-        )}
+          <p className="text-gray-600">Knowledge sharing, Q&A, and collaboration</p>
+        </div>
+
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-sm text-gray-600">{threads.length} threads</div>
+          <button
+            onClick={() => setIsAskOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-[#2D5A27] text-white rounded-lg font-medium hover:bg-[#3d7a37]"
+          >
+            <PlusCircle className="h-4 w-4" /> Ask Question
+          </button>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-md divide-y divide-gray-100">
+          {threads.map((t) => (
+            <div key={t.id} className="p-5 flex items-start gap-4">
+              <MessageSquare className="h-5 w-5 text-[#2D5A27] mt-0.5" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-gray-900">{t.title}</h3>
+                  <span className="text-xs text-gray-500">
+                    {new Date(t.createdAt).toLocaleString()}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600">by {t.author} · {t.replies} replies</div>
+                <div className="mt-2 flex items-center gap-2">
+                  {t.tags.map((tag, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-[#2D5A27]/10 text-[#2D5A27]">
+                      <Tag className="h-3 w-3" /> {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-3">
+                  <button
+                    onClick={() => showToast('Reply composer coming soon', 'info')}
+                    className="text-sm px-3 py-1.5 bg-white border border-gray-200 rounded-md hover:bg-gray-50"
+                  >
+                    Reply
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Thread Modal */}
-      {selectedThread && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-500" onClick={closeThread}>✕</button>
-            <h2 className="text-2xl font-bold mb-2">{selectedThread.title}</h2>
-            <div className="mb-4 text-sm text-gray-500">by {selectedThread.author}</div>
-            <div className="space-y-4 mb-4">
-              {selectedThread.posts.map((post) => (
-                <div key={post.id} className="border-b pb-2">
-                  <div className="font-semibold text-green-700">{post.author}</div>
-                  <div>{post.content}</div>
-                </div>
-              ))}
-            </div>
+      <Modal
+        isOpen={isAskOpen}
+        onClose={() => setIsAskOpen(false)}
+        title="Ask a Question"
+        actions={
+          <>
             <button
-              className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
-              onClick={openReplyModal}
+              onClick={() => setIsAskOpen(false)}
+              className="px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
             >
-              Reply
+              Cancel
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* Post Creation Modal */}
-      {showPostModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-500" onClick={closePostModal}>✕</button>
-            <h2 className="text-xl font-bold mb-4">Create New Thread</h2>
-            <input
-              type="text"
-              placeholder="Thread Title"
-              value={newThreadTitle}
-              onChange={(e) => setNewThreadTitle(e.target.value)}
-              className="border rounded px-3 py-2 w-full mb-2"
-            />
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={newThreadAuthor}
-              onChange={(e) => setNewThreadAuthor(e.target.value)}
-              className="border rounded px-3 py-2 w-full mb-2"
-            />
-            <textarea
-              placeholder="Post Content"
-              value={newThreadContent}
-              onChange={(e) => setNewThreadContent(e.target.value)}
-              className="border rounded px-3 py-2 w-full mb-4"
-              rows={4}
-            />
             <button
-              className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
-              onClick={createThread}
+              onClick={postQuestion}
+              className="px-4 py-2 rounded-lg font-semibold bg-[#2D5A27] text-white hover:bg-[#3d7a37]"
             >
-              Create Thread
+              Post Question
             </button>
-          </div>
+          </>
+        }
+      >
+        <div className="space-y-3">
+          <label className="block text-sm font-medium text-gray-700">Your question</label>
+          <input
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#2D5A27] focus:border-transparent"
+            placeholder="e.g., What is the most impactful home energy upgrade?"
+          />
         </div>
-      )}
-
-      {/* Reply Modal */}
-      {showReplyModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-500" onClick={closeReplyModal}>✕</button>
-            <h2 className="text-xl font-bold mb-4">Reply to Thread</h2>
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={replyAuthor}
-              onChange={(e) => setReplyAuthor(e.target.value)}
-              className="border rounded px-3 py-2 w-full mb-2"
-            />
-            <textarea
-              placeholder="Reply Content"
-              value={replyContent}
-              onChange={(e) => setReplyContent(e.target.value)}
-              className="border rounded px-3 py-2 w-full mb-4"
-              rows={4}
-            />
-            <button
-              className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
-              onClick={addReply}
-            >
-              Post Reply
-            </button>
-          </div>
-        </div>
-      )}
+      </Modal>
     </div>
   );
-};
-
-export default Forum;
+}

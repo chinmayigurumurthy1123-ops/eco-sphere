@@ -1,7 +1,8 @@
- import { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Leaf, Bell } from 'lucide-react';
 import notifications from './notificationsData';
+import { NotificationsBell } from './Notifications';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,8 @@ export default function Navigation() {
     { path: '/marketplace', label: 'Marketplace' },
     { path: '/learn', label: 'Learn' },
     { path: '/forum', label: 'Forum' },
+    { path: '/education', label: 'Education' },
+    { path: '/reports', label: 'Reports' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -42,6 +45,7 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
+            <NotificationsBell />
             <Link
               to="/login"
               className="px-4 py-2 rounded-md text-sm font-medium bg-[#FF8C42] hover:bg-[#e67a32] transition-colors"
@@ -119,6 +123,9 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
+            <div className="px-3 py-2">
+              <NotificationsBell />
+            </div>
             <Link
               to="/login"
               onClick={() => setIsOpen(false)}
