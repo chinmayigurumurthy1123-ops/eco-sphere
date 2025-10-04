@@ -3,35 +3,25 @@ import { Leaf, Target, TrendingDown, Users } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col justify-between">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1">
-        <div className="py-12 md:py-20 text-center flex flex-col items-center">
-          <div className="flex justify-center mb-6 gap-6 flex-wrap">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="py-20 text-center">
+          <div className="flex justify-center mb-6">
             <div className="bg-[#2D5A27] p-4 rounded-full">
               <Leaf className="h-16 w-16 text-white" />
             </div>
-            {/* Eco-themed illustration */}
-            <div className="w-32 h-32 flex items-center justify-center">
-              <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="64" cy="64" r="60" fill="#87CEEB" opacity="0.15" />
-                <ellipse cx="64" cy="80" rx="32" ry="16" fill="#4CAF50" opacity="0.5" />
-                <path d="M64 32C80 32 96 48 96 64C96 80 80 96 64 96C48 96 32 80 32 64C32 48 48 32 64 32Z" fill="#2D5A27" />
-                <path d="M64 48C72 48 80 56 80 64C80 72 72 80 64 80C56 80 48 72 48 64C48 56 56 48 64 48Z" fill="#A5D6A7" />
-                <circle cx="64" cy="64" r="6" fill="#FF8C42" />
-              </svg>
-            </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
             Welcome to <span className="text-[#2D5A27]">EcoSphere</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Track your carbon footprint, set sustainability goals, and offset your emissions
             through verified environmental projects. Join the movement toward a greener future.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 md:mb-16">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
             <Link
               to="/register"
               className="px-8 py-4 bg-[#2D5A27] text-white rounded-lg font-semibold text-lg hover:bg-[#3d7a37] transition-colors shadow-lg"
@@ -47,19 +37,19 @@ export default function Home() {
           </div>
 
           {/* Quote & Illustration */}
-          <div className="flex flex-col items-center mt-8 mb-8">
-            <blockquote className="text-2xl md:text-3xl font-semibold text-[#2D5A27] text-center">
-              "Measure. Reduce. Offset. Together"
-            </blockquote>
-            <div className="w-20 h-20 mt-4">
+          <div className="flex flex-col items-center mt-12 mb-8">
+            <div className="w-24 h-24 mb-2">
               <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="40" cy="40" r="36" fill="#87CEEB" opacity="0.2" />
                 <path d="M40 60C55 60 60 40 40 20C20 40 25 60 40 60Z" fill="#2D5A27" />
                 <ellipse cx="40" cy="40" rx="12" ry="18" fill="#4CAF50" opacity="0.7" />
               </svg>
             </div>
+            <blockquote className="text-2xl md:text-3xl font-semibold text-[#2D5A27] text-center">
+              "Measure. Reduce. Offset. Together"
+            </blockquote>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 md:mt-20">
+          <div className="grid md:grid-cols-3 gap-8 mt-20">
             <div className="bg-white p-8 rounded-xl shadow-md">
               <div className="bg-[#87CEEB] p-3 rounded-full w-fit mx-auto mb-4">
                 <TrendingDown className="h-8 w-8 text-white" />
