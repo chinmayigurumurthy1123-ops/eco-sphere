@@ -7,6 +7,9 @@ import Dashboard from './pages/Dashboard';
 import Calculator from './pages/Calculator';
 import Goals from './pages/Goals';
 import Marketplace from './pages/Marketplace';
+import Education from './pages/Education';
+import Forum from './pages/Forum';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/education" element={<Education />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </div>
     </Router>
