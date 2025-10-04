@@ -39,10 +39,13 @@ export default function Home() {
           {/* Quote & Illustration */}
           <div className="flex flex-col items-center mt-12 mb-8">
             <div className="w-24 h-24 mb-2">
+              {/* Modern abstract eco graph texture */}
               <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="36" fill="#87CEEB" opacity="0.2" />
-                <path d="M40 60C55 60 60 40 40 20C20 40 25 60 40 60Z" fill="#2D5A27" />
-                <ellipse cx="40" cy="40" rx="12" ry="18" fill="#4CAF50" opacity="0.7" />
+                <rect x="0" y="0" width="80" height="80" rx="40" fill="#E0F7FA" />
+                <path d="M10 60 Q30 20 50 60 T80 40" stroke="#2D5A27" strokeWidth="3" fill="none" />
+                <circle cx="30" cy="40" r="6" fill="#4CAF50" />
+                <circle cx="60" cy="55" r="4" fill="#FF8C42" />
+                <circle cx="50" cy="30" r="3" fill="#87CEEB" />
               </svg>
             </div>
             <blockquote className="text-2xl md:text-3xl font-semibold text-[#2D5A27] text-center">
